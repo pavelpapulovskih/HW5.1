@@ -23,4 +23,8 @@ public class Card {
     public String getCardValue() {
         return rank.getName() + " " + suit.getName();
     }
+
+    public Card copyCard () {
+        return new Card(this.rank, this.suit);
+    }
 }
