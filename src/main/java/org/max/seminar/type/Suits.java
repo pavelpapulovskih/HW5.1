@@ -10,6 +10,7 @@ public enum Suits {
     HEARTS ("Черви"),
     SPADES ("Пики");
 
+    //Имя масти
     private String name;
 
     Suits(String name) {

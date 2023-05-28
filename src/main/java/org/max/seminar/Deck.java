@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Колода
+ * Колода карт, состоит из 52 карт
  */
 public class Deck {
 
@@ -16,6 +16,7 @@ public class Deck {
         this.cards = cards;
     }
 
+    //метод получения карты из колоды
     public Card getCard() throws DeckEmptyException {
         if(cards.isEmpty()) {
             throw new DeckEmptyException("Колода пустая");

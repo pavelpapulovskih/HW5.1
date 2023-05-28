@@ -22,7 +22,10 @@ public enum Ranks {
     KING("Король", 4),
     ACE("Туз", 11);
 
+    //Имя карты
     private String name;
+
+    //Вес карты в игре
     private Integer value;
 
     public String getName() {

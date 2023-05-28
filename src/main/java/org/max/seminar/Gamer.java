@@ -3,9 +3,12 @@ package org.max.seminar;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Игрок
+ */
 public class Gamer extends Player {
 
-    public Gamer() {
-        super("Игрок");
+    public Gamer(int risk) {
+        super("Игрок", risk);
     }
 }

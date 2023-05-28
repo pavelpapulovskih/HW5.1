@@ -3,6 +3,9 @@ package org.max.seminar;
 import org.max.seminar.type.Ranks;
 import org.max.seminar.type.Suits;
 
+/**
+ * Объект карты состоит из масти и значения
+ */
 public class Card {
 
     private Ranks rank;
