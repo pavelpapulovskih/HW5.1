@@ -1,12 +1,8 @@
-package org.max.home.example;
+package org.max.home;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.max.home.Door;
-import org.max.home.Game;
-import org.max.home.Player;
 
 import java.util.ArrayList;
 import java.util.List;
