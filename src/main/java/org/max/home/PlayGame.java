@@ -1,6 +1,10 @@
 package org.max.home;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Main класс для запуска Монти Холла в цикле
  */
@@ -13,12 +17,21 @@ public class PlayGame {
         int step;
 
         for (step = 0; step<1000; step++) {
-            Game game = new Game(gamer);
+            Game game = new Game(gamer, getDoors());
 
             if (game.round(0).isPrize()) statisticWin++;
         }
 
         System.out.println("Из " + step + " игр игрок выиграл " + statisticWin);
 
+    }
+
+    private static List<Door> getDoors() {
+        List<Door> doors = new ArrayList<>();
+        doors.add(new Door(true));
+        doors.add(new Door(false));
+        doors.add(new Door(false));
+        Collections.shuffle(doors);
+        return doors;
     }
 }
