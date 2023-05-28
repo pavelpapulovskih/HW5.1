@@ -57,4 +57,8 @@ public abstract class Player {
     public int getRisk() {
         return risk;
     }
+
+    public void setRisk(int risk) {
+        this.risk = risk;
+    }
 }
