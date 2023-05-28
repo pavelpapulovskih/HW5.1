@@ -10,11 +10,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Month;
 
+/*
+    Демонстрация работы параметризованного теста
+ */
 public class ParametrizedDemoTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 3, 5, 10, -3, 15, Integer.MAX_VALUE})
-    @DisplayName("демонстрация работы параметраризованного теста")
+    @DisplayName("демонстрация работы параметраризованного теста с использование ValueSource")
     void parameterizedTest(int number) {
         //given
         //when
@@ -27,7 +30,7 @@ public class ParametrizedDemoTest {
     }
 
     @ParameterizedTest
-    @DisplayName("демонстрация работы параметраризованного теста с использование enum")
+    @DisplayName("демонстрация работы параметраризованного теста с использование EnumSource")
     @EnumSource(value = Month.class, names = {"APRIL", "JUNE", "SEPTEMBER", "NOVEMBER", "DECEMBER"})
     void someMonths_Are30DaysLong(Month month) {
         //given
@@ -38,7 +41,7 @@ public class ParametrizedDemoTest {
     }
 
     @ParameterizedTest
-    @DisplayName("демонстрация работы параметраризованного теста с использование csv")
+    @DisplayName("демонстрация работы параметраризованного теста с использование CsvSource")
     @CsvSource({"test,TEST", "tEst,TEST", "Java,JAVA"})
     void toUpperCase_ShouldGenerateTheExpectedUppercaseValue(String input, String expected) {
         //given
@@ -49,10 +52,14 @@ public class ParametrizedDemoTest {
     }
 
     @ParameterizedTest
+    @DisplayName("демонстрация работы параметраризованного теста с использование CsvSource файла")
     @CsvFileSource(resources = "/data.csv", numLinesToSkip = 1)
     void toUpperCase_ShouldGenerateTheExpectedUppercaseValueCSVFile(
             String input, String expected) {
+        //given
+        //when
         String actualValue = input.toUpperCase();
+        //then
         Assertions.assertEquals(expected, actualValue);
     }
 }

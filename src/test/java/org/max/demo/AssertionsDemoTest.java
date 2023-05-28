@@ -81,6 +81,17 @@ public class AssertionsDemoTest {
         Assertions.assertThrows(NullPointerException.class, () -> returnNullPointerException());
     }
 
+    @Test
+    @DisplayName("демонстрация утверждения assertAll")
+    void assertMultiple() {
+        //given
+        //when
+        Assertions.assertAll(() -> Assertions.assertEquals("String", 100),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> returnNullPointerException()),
+                () -> Assertions.assertTrue(false),
+                () -> Assertions.assertFalse(true));
+    }
+
     private Object returnNullPointerException() {
         throw new NullPointerException();
     }
