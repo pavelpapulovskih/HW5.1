@@ -17,7 +17,7 @@ public class PlayGame {
         for (int i = 0; i<100; i++) {
             Game game = new Game(gamer, casino);
 
-            statistic.put("Game № " + i, game.round(game));
+            statistic.put("Game № " + i, game.round());
         }
 
         statistic.entrySet().forEach(System.out::println);

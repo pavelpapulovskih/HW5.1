@@ -74,28 +74,27 @@ public class Game {
      * Игроку и казино раздаются карты, проверяется, что не привычили лимит
      * Если лимит не превышен проверяются риски
      * Иначе рекурсивно функция вызывает саму себя
-     * @param game
      * @return
      */
-    public String round (Game game) {
+    public String round () {
 
-        game.addCardToPlayer();
-        if (game.checkHand(game.getGamer())) {
-            return game.getCasino().getName();
+        this.addCardToPlayer();
+        if (this.checkHand(this.getGamer())) {
+            return this.getCasino().getName();
         }
-        game.addCardToCasino();
-        if (game.checkHand(game.getCasino())) {
-            return game.getGamer().getName();
+        this.addCardToCasino();
+        if (this.checkHand(this.getCasino())) {
+            return this.getGamer().getName();
         }
 
-        if (checkRisk(game.getGamer())) {
-            if(gamer.getHandSumm() > casino.getHandSumm() && !checkRisk(game.getCasino())) {
-                game.addCardToCasino();
+        if (checkRisk(this.getGamer())) {
+            if(gamer.getHandSumm() > casino.getHandSumm() && !checkRisk(this.getCasino())) {
+                this.addCardToCasino();
             }
             return gamer.getHandSumm() > casino.getHandSumm()? gamer.getName() : casino.getName();
         }
 
-        return round(game);
+        return round();
     }
 
 }
