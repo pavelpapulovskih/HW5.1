@@ -1,4 +1,4 @@
-package org.max.lesson1.game;
+package org.max.seminar;
 
 import java.util.ArrayList;
 import java.util.List;

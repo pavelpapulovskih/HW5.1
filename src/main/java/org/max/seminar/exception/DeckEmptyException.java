@@ -1,4 +1,4 @@
-package org.max.lesson1.game.exception;
+package org.max.seminar.exception;
 
 public class DeckEmptyException extends Exception{
 

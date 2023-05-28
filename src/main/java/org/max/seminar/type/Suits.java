@@ -1,4 +1,4 @@
-package org.max.lesson1.game.type;
+package org.max.seminar.type;
 
 /**
  * Масть

@@ -1,4 +1,4 @@
-package org.max.lesson1.game;
+package org.max.seminar;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,8 +1,6 @@
-package org.max.lesson1.game;
+package org.max.seminar;
 
-import org.max.lesson1.game.exception.DeckEmptyException;
-import org.max.lesson1.game.type.Ranks;
-import org.max.lesson1.game.type.Suits;
+import org.max.seminar.exception.DeckEmptyException;
 
 import java.util.HashMap;
 import java.util.List;

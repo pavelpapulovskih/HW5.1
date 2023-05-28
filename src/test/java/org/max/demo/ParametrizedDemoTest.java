@@ -1,4 +1,4 @@
-package org.max.lesson1.demo;
+package org.max.demo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

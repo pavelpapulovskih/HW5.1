@@ -1,6 +1,6 @@
-package org.max.lesson1.game;
+package org.max.seminar;
 
-import org.max.lesson1.game.exception.DeckEmptyException;
+import org.max.seminar.exception.DeckEmptyException;
 
 public class Game {
 

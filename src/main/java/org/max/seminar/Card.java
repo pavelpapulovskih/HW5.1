@@ -1,7 +1,7 @@
-package org.max.lesson1.game;
+package org.max.seminar;
 
-import org.max.lesson1.game.type.Ranks;
-import org.max.lesson1.game.type.Suits;
+import org.max.seminar.type.Ranks;
+import org.max.seminar.type.Suits;
 
 public class Card {
 
