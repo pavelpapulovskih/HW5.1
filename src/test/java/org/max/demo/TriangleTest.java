@@ -12,12 +12,17 @@ import org.slf4j.LoggerFactory;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.times;
 
+/**
+ * Демонстрация мокирования на примере задачи вычисления площади треугольника
+ */
 @ExtendWith(MockitoExtension.class)
 public class TriangleTest {
 
+    //Создание объекта Logger
     private static final Logger logger
             = LoggerFactory.getLogger(TriangleTest.class);
 
+    //Демо тест без мокирования
     @Test
     void testWithoutMock() throws NotTriangleException {
         //given
@@ -33,6 +38,7 @@ public class TriangleTest {
     @Mock
     Triangle triangleMock = new Triangle();
 
+    //Определение результа поведения мок метода
     @Test
     void testMockWhen() {
         //given
@@ -47,6 +53,7 @@ public class TriangleTest {
         Mockito.verifyNoMoreInteractions(triangleMock);
     }
 
+    //Определение результа поведения мок метода - Exception
     @Test
     void testMockThrow() throws NotTriangleException {
         //given
@@ -57,6 +64,7 @@ public class TriangleTest {
 
     }
 
+    //Демонстрация работы функции doAnswer
     @Test
     void testMockAnswer(){
         //given

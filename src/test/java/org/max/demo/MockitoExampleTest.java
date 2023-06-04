@@ -13,12 +13,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Демонстрация работы библиотеки мокирования
+ */
 @ExtendWith(MockitoExtension.class)
 public class MockitoExampleTest {
 
     @Mock
     HashMap<String, String> hashMapMock = new HashMap<>();
 
+    //Работа с mock объектами
     @Test
     void simpleMockTest() {
 
@@ -40,6 +44,7 @@ public class MockitoExampleTest {
     @Spy
     HashMap<String, String> hashMapSpy = new HashMap<>();
 
+    //Демонстрация работы со SPY объектами
     @Test
     void simpleSpyTest() {
 

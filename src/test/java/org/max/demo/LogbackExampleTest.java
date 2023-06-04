@@ -4,17 +4,23 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Демонстрация работы библиотеки логирования
+ */
 public class LogbackExampleTest {
 
+    //Создание объекта Logger
     private static final Logger logger
             = LoggerFactory.getLogger(LogbackExampleTest.class);
 
+    //генерация лог сообщения
     @Test
     void simpleExampleTest() {
         logger.info("Example log from " + LogbackExampleTest.class.getSimpleName());
         logger.info("log String value to console");
     }
 
+    //генерация лог сообщения с параметрами
     @Test
     void parametrizedMessageTest() {
         String message = "This is a String";

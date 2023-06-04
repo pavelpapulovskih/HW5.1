@@ -8,29 +8,32 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Демонстрация работы библиотеки WireMock
+ */
 public class WireMockTest {
 
 
     static WireMockServer wireMockServer = new WireMockServer();
 
+    //Инициализация http сервера
     @BeforeAll
     static void startServer() {
         wireMockServer.start();
         configureFor("localhost", 8080);
     }
 
+    //Демонстрация совпадения url
     @Test
     void testUrlEqual() throws IOException {
         //given
@@ -45,6 +48,7 @@ public class WireMockTest {
         assertEquals("Welcome to test!", convertResponseToString(httpResponse));
     }
 
+    //Демонстрация совпадения url по маске
     @Test
     void testURLMatching() throws IOException {
         //given
@@ -65,6 +69,7 @@ public class WireMockTest {
         assertEquals("\"library\": \"WireMock\"", stringResponse);
     }
 
+    //Демонстрация совпадения header
     @Test
     void testHeaderMatching() throws IOException {
         //given
@@ -88,6 +93,7 @@ public class WireMockTest {
         assertEquals("503 Service Unavailable", stringResponse);
     }
 
+    //Демонстрация совпадения body
     @Test
     void testBodyMatching() throws IOException {
         //given
@@ -113,6 +119,7 @@ public class WireMockTest {
         assertEquals(200, response.getStatusLine().getStatusCode());
     }
 
+    //Демонстрация приоритета при определении мок ответа
     @Test
     void testPriority() throws IOException {
         //given
@@ -135,11 +142,13 @@ public class WireMockTest {
         assertEquals(200, response.getStatusLine().getStatusCode());
     }
 
+    //Остановка http сервиса
     @AfterAll
     static void stopServer() {
         wireMockServer.stop();
     }
 
+    //Вспомогательный метод - конвертор body to string
     private String convertResponseToString(HttpResponse response) throws IOException {
 
         try(InputStream responseStream = response.getEntity().getContent();
@@ -147,6 +156,8 @@ public class WireMockTest {
             String responseString = scanner.useDelimiter("\\Z").next();
             return responseString;
         }
+
+
 
     }
 }
