@@ -1,8 +1,19 @@
 package org.max.home;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ClassifyCuisineTest extends AbstractTest{
 
@@ -11,25 +22,56 @@ public class ClassifyCuisineTest extends AbstractTest{
 
 
     @Test
-    void post_shouldReturn200() {
+    void post_shouldReturn200() throws IOException {
         //given
+        ObjectMapper mapper = new ObjectMapper();
+        ClassifyCuisineDTO bodyResponse = new ClassifyCuisineDTO();
+        bodyResponse.setCuisine("CuisineValue");
+
+        stubFor(post(urlEqualTo("/recipes/cuisine"))
+                .withHeader("Content-Type", equalTo("application/x-www-form-urlencoded"))
+                .withRequestBody(containing("\"title\": \"Pork roast with green beans\""))
+                .willReturn(aResponse()
+                        .withStatus(200).withBody(mapper.writeValueAsString(bodyResponse))));
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost request = new HttpPost(getBaseUrl()+"/recipes/cuisine");
+        request.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.setEntity(new StringEntity("{" +
+                "\"title\": \"Pork roast with green beans\"" +
+                "}"));
         //when
+        HttpResponse response = httpClient.execute(request);
         //then
+        verify(postRequestedFor(urlEqualTo("/recipes/cuisine"))
+                .withHeader("Content-Type", equalTo("application/x-www-form-urlencoded")));
+        assertEquals(200, response.getStatusLine().getStatusCode());
+        ClassifyCuisineDTO bodyToCheck = mapper.readValue(response.getEntity().getContent(), ClassifyCuisineDTO.class);
+        assertEquals("CuisineValue", bodyToCheck.getCuisine());
     }
 
     @Test
-    void post_shouldReturn500() {
+    void post_shouldReturn404() throws IOException {
         //given
-        //when
-        //then
-    }
+        stubFor(post(urlEqualTo("/recipes/cuisine"))
+                .withHeader("Content-Type", equalTo("application/json"))
+                .withRequestBody(containing("\"title\": \"Pork roast with green beans\""))
+                .willReturn(aResponse()
+                        .withStatus(403).withBody("ERROR")));
 
-    @Test
-    void post_shouldReturn400() {
-        //given
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost request = new HttpPost(getBaseUrl()+"/recipes/cuisine");
+        request.addHeader("Content-Type", "application/json");
+        request.setEntity(new StringEntity("{" +
+                "\"title\": \"Pork roast with green beans\"" +
+                "}"));
         //when
+        HttpResponse response = httpClient.execute(request);
         //then
+        verify(postRequestedFor(urlEqualTo("/recipes/cuisine"))
+                .withHeader("Content-Type", equalTo("application/json")));
+        assertEquals(403, response.getStatusLine().getStatusCode());
+        assertEquals("ERROR", convertResponseToString(response));
     }
-
 
 }

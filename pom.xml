@@ -18,6 +18,7 @@
         <mockito.version>5.3.1</mockito.version>
         <wiremock.version>1.58</wiremock.version>
         <surefire.version>2.22.2</surefire.version>
+        <jackson.version>2.15.0</jackson.version>
     </properties>
 
     <!-- Архивирование -->
@@ -41,6 +42,13 @@
             <artifactId>junit-jupiter-params</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Лекция 3. Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- Лекция 5. Логирование -->
@@ -82,7 +90,7 @@
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock</artifactId>
             <version>${wiremock.version}</version>
-            <scope>test</scope>
+  <!--          <scope>test</scope>-->
         </dependency>
 
     </dependencies>

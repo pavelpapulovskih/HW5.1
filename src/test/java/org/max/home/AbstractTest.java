@@ -17,12 +17,14 @@ public class AbstractTest {
 
     private static WireMockServer wireMockServer = new WireMockServer();
     private static final int port = 8080;
+    private static String baseUrl;
 
     private static final Logger logger
             = LoggerFactory.getLogger(AbstractTest.class);
 
     @BeforeAll
     static void startServer() {
+        baseUrl = "http://localhost:" + port;
         wireMockServer.start();
         configureFor("localhost", port);
         logger.info("Start WireMockServer on port {}",port);
@@ -43,5 +45,9 @@ public class AbstractTest {
             return responseString;
         }
 
+    }
+
+    public static String getBaseUrl() {
+        return baseUrl;
     }
 }
