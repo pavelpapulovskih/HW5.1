@@ -1,0 +1,31 @@
+package org.max.seminar;
+
+import com.github.tomakehurst.wiremock.WireMockServer;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
+
+public class AbstractTest {
+
+    private static WireMockServer wireMockServer = new WireMockServer();
+    private static final int port = 8080;
+
+    private static final Logger logger
+            = LoggerFactory.getLogger(AbstractTest.class);
+
+    @BeforeAll
+    static void startServer() {
+        wireMockServer.start();
+        configureFor("localhost", port);
+        logger.info("Start WireMockServer on port {}",port);
+    }
+
+    @AfterAll
+    static void stopServer() {
+        wireMockServer.stop();
+        logger.info("Stop WireMockServer");
+    }
+}
