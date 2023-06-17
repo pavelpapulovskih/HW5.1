@@ -1,10 +1,15 @@
 package org.max.seminar;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import org.apache.http.HttpResponse;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
 
@@ -27,5 +32,16 @@ public class AbstractTest {
     static void stopServer() {
         wireMockServer.stop();
         logger.info("Stop WireMockServer");
+    }
+
+    //Вспомогательный метод - конвертор body to string
+    public String convertResponseToString(HttpResponse response) throws IOException {
+
+        try(InputStream responseStream = response.getEntity().getContent();
+            Scanner scanner = new Scanner(responseStream, "UTF-8");) {
+            String responseString = scanner.useDelimiter("\\Z").next();
+            return responseString;
+        }
+
     }
 }
