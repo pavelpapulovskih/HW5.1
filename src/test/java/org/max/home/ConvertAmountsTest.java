@@ -37,6 +37,8 @@ public class ConvertAmountsTest extends AbstractTest {
         bodyResponse.setTargetAmount(200d);
         bodyResponse.setType("Count");
         bodyResponse.setTargetUnit("Soup");
+
+        logger.debug("Формирование мока для GET /recipes/convert");
         stubFor(get(urlPathEqualTo("/recipes/convert"))
                 .willReturn(aResponse()
                         .withStatus(200).withBody(mapper.writeValueAsString(bodyResponse))));
@@ -51,6 +53,7 @@ public class ConvertAmountsTest extends AbstractTest {
                 .addParameter("targetUnit", "grams")
                 .build();
         request.setURI(uri);
+        logger.debug("http клиент создан");
         //when
         HttpResponse response = httpClient.execute(request);
         //then

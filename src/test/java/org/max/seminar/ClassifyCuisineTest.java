@@ -66,13 +66,14 @@ public class ClassifyCuisineTest extends AbstractTest {
                 .willReturn(aResponse()
                         .withStatus(403).withBody("ERROR")));
 
+
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost request = new HttpPost(getBaseUrl()+"/recipes/cuisine");
         request.addHeader("Content-Type", "application/json");
         request.setEntity(new StringEntity("{" +
                 "\"title\": \"Pork roast with green beans\"" +
                 "}"));
-
+        logger.debug("http клиент создан");
         //when
         HttpResponse response = httpClient.execute(request);
         //then

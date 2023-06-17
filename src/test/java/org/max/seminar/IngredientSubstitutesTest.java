@@ -16,7 +16,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IngredientSubstitutesTest extends AbstractTest {
@@ -27,6 +26,7 @@ public class IngredientSubstitutesTest extends AbstractTest {
 
     @Test
     void get_shouldReturn200() throws IOException, URISyntaxException {
+        logger.info("Тест код ответ 200 запущен");
         //given
         ObjectMapper mapper = new ObjectMapper();
         IngredientSubstitutesDto bodyOk = new IngredientSubstitutesDto();
@@ -35,7 +35,7 @@ public class IngredientSubstitutesTest extends AbstractTest {
         IngredientSubstitutesDto bodyError = new IngredientSubstitutesDto();
         bodyError.setStatus("Error");
 
-
+        logger.debug("Формирование мока для GET /food/ingredients/substitutes");
         stubFor(get(urlPathEqualTo("/food/ingredients/substitutes"))
                 .withQueryParam("ingredientName", equalTo("butter"))
                 .willReturn(aResponse()
@@ -47,7 +47,7 @@ public class IngredientSubstitutesTest extends AbstractTest {
                         .withStatus(200).withBody(mapper.writeValueAsString(bodyError))));
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
-
+        logger.debug("http клиент создан");
         //when
 
         HttpGet request = new HttpGet(getBaseUrl()+"/food/ingredients/substitutes");
@@ -75,7 +75,9 @@ public class IngredientSubstitutesTest extends AbstractTest {
 
     @Test
     void get_shouldReturn401() throws IOException, URISyntaxException {
+        logger.info("Тест код ответ 401 запущен");
         //given
+        logger.debug("Формирование мока для GET /food/ingredients/substitutes");
         stubFor(get(urlPathEqualTo("/food/ingredients/substitutes"))
                 .withQueryParam("apiKey", notMatching("82c9229354f849e78efe010d94150807"))
                 .willReturn(aResponse()
@@ -86,6 +88,7 @@ public class IngredientSubstitutesTest extends AbstractTest {
                 .addParameter("apiKey", "A_82c9229354f849e78efe010d94150807")
                 .build();
         request.setURI(uri);
+        logger.debug("http клиент создан");
         //when
         HttpResponse response = httpClient.execute(request);
         //then
