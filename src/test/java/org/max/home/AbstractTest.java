@@ -38,7 +38,7 @@ public class AbstractTest {
 
     //Вспомогательный метод - конвертор body to string
     public String convertResponseToString(HttpResponse response) throws IOException {
-
+        logger.debug("convertResponseToString method call");
         try(InputStream responseStream = response.getEntity().getContent();
             Scanner scanner = new Scanner(responseStream, "UTF-8");) {
             String responseString = scanner.useDelimiter("\\Z").next();

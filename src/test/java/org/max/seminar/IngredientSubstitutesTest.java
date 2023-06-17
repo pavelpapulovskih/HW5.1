@@ -1,15 +1,13 @@
-package org.max.home;
+package org.max.seminar;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.client.ValueMatchingStrategy;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.Test;
+import org.max.home.AbstractTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +19,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class IngredientSubstitutesTest extends AbstractTest{
+public class IngredientSubstitutesTest extends AbstractTest {
 
     private static final Logger logger
             = LoggerFactory.getLogger(IngredientSubstitutesTest.class);

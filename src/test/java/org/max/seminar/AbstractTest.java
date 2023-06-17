@@ -17,12 +17,14 @@ public class AbstractTest {
 
     private static WireMockServer wireMockServer = new WireMockServer();
     private static final int port = 8080;
+    private static String baseUrl;
 
     private static final Logger logger
             = LoggerFactory.getLogger(AbstractTest.class);
 
     @BeforeAll
     static void startServer() {
+        baseUrl = "http://localhost:" + port;
         wireMockServer.start();
         configureFor("localhost", port);
         logger.info("Start WireMockServer on port {}",port);
@@ -36,12 +38,16 @@ public class AbstractTest {
 
     //Вспомогательный метод - конвертор body to string
     public String convertResponseToString(HttpResponse response) throws IOException {
-
+        logger.debug("convertResponseToString method call");
         try(InputStream responseStream = response.getEntity().getContent();
             Scanner scanner = new Scanner(responseStream, "UTF-8");) {
             String responseString = scanner.useDelimiter("\\Z").next();
             return responseString;
         }
 
+    }
+
+    public static String getBaseUrl() {
+        return baseUrl;
     }
 }
