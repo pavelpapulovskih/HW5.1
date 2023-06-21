@@ -1,4 +1,4 @@
-package org.max.home;
+package org.max.home.spoon;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

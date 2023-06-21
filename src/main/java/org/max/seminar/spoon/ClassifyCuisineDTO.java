@@ -1,4 +1,4 @@
-package org.max.seminar;
+package org.max.seminar.spoon;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

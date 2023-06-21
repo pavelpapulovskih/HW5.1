@@ -1,11 +1,11 @@
-package org.max.home;
+package org.max.home.spoon;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.Test;
-import org.max.seminar.AbstractTest;
+import org.max.seminar.spoon.AbstractTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

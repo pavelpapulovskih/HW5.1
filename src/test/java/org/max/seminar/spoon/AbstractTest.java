@@ -1,4 +1,4 @@
-package org.max.seminar;
+package org.max.seminar.spoon;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.apache.http.HttpResponse;
