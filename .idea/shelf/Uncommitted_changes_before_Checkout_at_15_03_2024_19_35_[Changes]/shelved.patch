@@ -1,0 +1,154 @@
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n    <groupId>org.max</groupId>\r\n    <artifactId>auto</artifactId>\r\n    <version>1.0-SNAPSHOT</version>\r\n\r\n    <!-- Переменные -->\r\n    <properties>\r\n        <maven.compiler.source>17</maven.compiler.source>\r\n        <maven.compiler.target>17</maven.compiler.target>\r\n        <junit.version>5.7.2</junit.version>\r\n        <sql.version>3.42.0.0</sql.version>\r\n        <hibernate-version>5.0.1.Final</hibernate-version>\r\n        <flyway.version>8.5.13</flyway.version>\r\n        <surefire.version>2.22.2</surefire.version>\r\n    </properties>\r\n\r\n    <!-- Архивирование -->\r\n    <packaging>jar</packaging>\r\n\r\n    <name>Демо проект</name>\r\n    <description>Демонстрационный проект для курса введения в автоматизацию</description>\r\n    <url>http://demo.max.org</url>\r\n\r\n    <!-- Зависимости -->\r\n    <dependencies>\r\n        <!-- Лекция 1.Зависимости junit -->\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter-engine</artifactId>\r\n            <version>${junit.version}</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter-params</artifactId>\r\n            <version>${junit.version}</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <!-- Лекция 4. SQLite -->\r\n        <dependency>\r\n            <groupId>org.xerial</groupId>\r\n            <artifactId>sqlite-jdbc</artifactId>\r\n            <version>${sql.version}</version>\r\n        </dependency>\r\n\r\n        <!-- Лекция 4. ORM -->\r\n        <dependency>\r\n            <groupId>org.hibernate</groupId>\r\n            <artifactId>hibernate-core</artifactId>\r\n            <version>${hibernate-version}</version>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.hibernate</groupId>\r\n            <artifactId>hibernate-entitymanager</artifactId>\r\n            <version>${hibernate-version}</version>\r\n        </dependency>\r\n\r\n        <!-- Лекция 4. Диалект -->\r\n        <dependency>\r\n            <groupId>com.zsoltfabok</groupId>\r\n            <artifactId>sqlite-dialect</artifactId>\r\n            <version>1.0</version>\r\n        </dependency>\r\n    </dependencies>\r\n\r\n    <!-- Сборка -->\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-compiler-plugin</artifactId>\r\n                <configuration>\r\n                    <source>17</source>\r\n                    <target>17</target>\r\n                </configuration>\r\n            </plugin>\r\n            <plugin>\r\n                <groupId>org.flywaydb</groupId>\r\n                <artifactId>flyway-maven-plugin</artifactId>\r\n                <version>${flyway.version}</version>\r\n                <configuration>\r\n                    <baselineOnMigrate>true</baselineOnMigrate>\r\n                    <!--<user>user</user>\r\n                    <password>password</password>\r\n                    <schemas>\r\n                        <schema>schemaName</schema>\r\n                    </schemas>  -->\r\n                    <url>jdbc:sqlite:demo.db</url>\r\n                    <locations>filesystem:db/demo/migration</locations>\r\n                </configuration>\r\n            </plugin>\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-surefire-plugin</artifactId>\r\n                <version>${surefire.version}</version>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n\r\n    <!-- Репозитории -->\r\n    <repositories>\r\n        <repository>\r\n            <id>mvnrepository</id>\r\n            <url>https://mvnrepository.com/</url>\r\n        </repository>\r\n    </repositories>\r\n\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	
++++ b/pom.xml	
+@@ -91,8 +91,8 @@
+                     <schemas>
+                         <schema>schemaName</schema>
+                     </schemas>  -->
+-                    <url>jdbc:sqlite:demo.db</url>
+-                    <locations>filesystem:db/demo/migration</locations>
++                    <url>jdbc:sqlite:home.db</url>
++                    <locations>filesystem:db/home/migration</locations>
+                 </configuration>
+             </plugin>
+             <plugin>
+Index: src/test/java/org/max/home/DeliveryTableTest.java
+===================================================================
+diff --git a/src/test/java/org/max/home/DeliveryTableTest.java b/src/test/java/org/max/home/DeliveryTableTest.java
+new file mode 100644
+--- /dev/null	
++++ b/src/test/java/org/max/home/DeliveryTableTest.java	
+@@ -0,0 +1,88 @@
++package org.max.home;
++
++import java.sql.Connection;
++import java.sql.DriverManager;
++import java.sql.PreparedStatement;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++
++import org.junit.jupiter.api.AfterAll;
++import org.junit.jupiter.api.BeforeAll;
++import org.junit.jupiter.api.Test;
++
++import static org.junit.jupiter.api.Assertions.*;
++
++public class DeliveryTableTest {
++
++    private static final String URL = "jdbc:sqlite::memory:";
++
++    @BeforeAll
++    public static void setup() throws SQLException {
++        try (Connection connection = DriverManager.getConnection(URL);
++             PreparedStatement statement = connection.prepareStatement(
++                     "CREATE TABLE delivery " +
++                             "(delivery_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
++                             "order_id INTEGER UNIQUE NOT NULL, " +
++                             "courier_id INTEGER NOT NULL, " +
++                             "date_arrived TIMESTAMP UNIQUE, " +
++                             "taken VARCHAR(3) NOT NULL, " +
++                             "payment_method VARCHAR(4), " +
++                             "FOREIGN KEY (order_id) REFERENCES orders(order_id), " +
++                             "FOREIGN KEY (courier_id) REFERENCES courier_info(courier_id));")) {
++            statement.executeUpdate();
++        }
++    }
++
++    @Test
++    public void testInsertDelivery() throws SQLException {
++        try (Connection connection = DriverManager.getConnection(URL);
++             PreparedStatement statement = connection.prepareStatement("INSERT INTO delivery VALUES (?, ?, ?, ?, ?, ?);")) {
++            statement.setInt(1, 1);
++            statement.setInt(2, 1);
++            statement.setInt(3, 3);
++            statement.setString(4, "2023-02-26 17:59:15");
++            statement.setString(5, "Yes");
++            statement.setString(6, "Cash");
++
++            int rowsInserted = statement.executeUpdate();
++            assertEquals(1, rowsInserted);
++        }
++
++        try (Connection connection = DriverManager.getConnection(URL);
++             PreparedStatement statement = connection.prepareStatement("SELECT * FROM delivery WHERE delivery_id = 1;");
++             ResultSet resultSet = statement.executeQuery()) {
++            assertTrue(resultSet.next());
++            assertEquals(1, resultSet.getInt("delivery_id"));
++            assertEquals(1, resultSet.getInt("order_id"));
++            assertEquals(3, resultSet.getInt("courier_id"));
++            assertEquals("2023-02-26 17:59:15", resultSet.getString("date_arrived"));
++            assertEquals("Yes", resultSet.getString("taken"));
++            assertEquals("Cash", resultSet.getString("payment_method"));
++        }
++    }
++
++    @Test
++    public void testInvalidInsertDelivery() throws SQLException {
++        try (Connection connection = DriverManager.getConnection(URL);
++             PreparedStatement statement = connection.prepareStatement("INSERT INTO delivery VALUES (?, ?, ?, ?, ?, ?);")) {
++            statement.setInt(1, 2);
++            statement.setInt(2, 1);
++            statement.setInt(3, 3);
++            statement.setString(4, "2023-02-26 17:59:15");
++            statement.setString(5, "Yes");
++            statement.setString(6, "Cash");
++
++            int rowsInserted = statement.executeUpdate();
++            assertEquals(0, rowsInserted);
++        }
++    }
++
++    @AfterAll
++    public static void tearDown() throws SQLException {
++        try (Connection connection = DriverManager.getConnection(URL);
++             PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS delivery;")) {
++            statement.executeUpdate();
++        }
++    }
++}
++
+Index: src/test/java/org/max/home/OrdersProductsTest.java
+===================================================================
+diff --git a/src/test/java/org/max/home/OrdersProductsTest.java b/src/test/java/org/max/home/OrdersProductsTest.java
+new file mode 100644
+--- /dev/null	
++++ b/src/test/java/org/max/home/OrdersProductsTest.java	
+@@ -0,0 +1,31 @@
++package org.max.home;
++
++import java.sql.Connection;
++import java.sql.DriverManager;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.sql.Statement;
++
++import org.junit.jupiter.api.Assert;
++import org.junit.jupiter.api.Test;
++
++public class OrdersProductsTest {
++
++    @Test
++    public void testOrdersProducts() {
++        String url = "jdbc:sqlite:test.db";
++        String sql = "SELECT COUNT(*) FROM orders_products";
++
++        try (Connection conn = DriverManager.getConnection(url);
++             Statement stmt = conn.createStatement();
++             ResultSet rs = stmt.executeQuery(sql)) {
++
++            int count = rs.getInt(1);
++            Assert.assertEquals(20, count); // Проверка, что в таблице 20 записей
++
++        } catch (SQLException e) {
++            System.out.println(e.getMessage());
++        }
++    }
++}
++
